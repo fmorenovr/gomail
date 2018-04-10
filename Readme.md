@@ -5,7 +5,7 @@ You can see an extended doc in [godocs](https://godoc.org/github.com/Jenazads/go
 
 ## SMTP
 
-SMTP is a protocol that you can send secure text messages trough the internet.
+SMTP is a protocol that you can send secure text messages trough the internet.  
 See more info [here](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol).
 
 ## goMail

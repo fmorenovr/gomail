@@ -6,7 +6,7 @@ import (
 )
 
 func Example_sendingMessage() {
-	gomailObject := gomail.NewGomail()
+	gomailObject, _ := gomail.NewGomail()
   
   // from
 	gomailObject.Set("From", "example@gomail.com")

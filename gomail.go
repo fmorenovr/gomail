@@ -14,8 +14,8 @@ type Gomail struct {
 }
 
 // Create a New Gomail instance
-func NewGomail()(*Gomail){
-  return &Gomail{}
+func NewGomail()(*Gomail, error){
+  return &Gomail{}, nil
 }
 
 // menu to ser

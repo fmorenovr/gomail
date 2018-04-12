@@ -2,7 +2,6 @@ package gomail
 
 import (
   "strings";
-  "net/smtp";
   "crypto/tls";
 )
 
@@ -28,8 +27,8 @@ func NewSMTPServerOptions(mhost, mport string)(*SMTPServer){
          }
 }
 
-// set servername
-func (s *SMTPServer) SetServerName(v string) (){
+// new instance servername
+func (s *SMTPServer) NewSMTPServerName(v string) (){
   hostport := strings.Split(v, ":")
   s.SetServerHost(hostport[0])
   s.SetServerPort(hostport[1])
@@ -66,66 +65,4 @@ func (s *SMTPServer) SetServerPort(v string) () {
 // get server port
 func (s *SMTPServer) GetServerPort() string {
   return s.port
-}
-
-// Send Message
-func (s *SMTPServer) SendMessage(u *UserCredentials, o *Gomail)(error){
-  err := o.VerifyEmails()
-  if err != nil{
-    return err
-  }
-  messageToSend := o.PrepareMessage()
-  servername := s.GetServerName()
-  host := s.GetServerHost()
-
-  //build an auth
-  auth := NewGomailAuth(u, host)
-
-  // TLS config
-  tlsconfig := s.SMTPServerTLS()
-  conn, err := tls.Dial("tcp", servername, tlsconfig)
-  if err != nil {
-    return GomailErrBadHostPortServer
-  }
-
-  // create new client
-  c, err := smtp.NewClient(conn, host)
-  if err != nil {
-    return GomailErrSMTPClient
-  }
-
-  defer c.Quit()
-
-  // step 1: Use Auth
-  if err = c.Auth(auth); err != nil {
-    return GomailErrBadCredentials
-  }
-
-  // step 2: add all from and to
-  if err = c.Mail(o.GetFromAddress()); err != nil {
-    return GomailErrSyntaxSender
-  }
-
-  for _, k := range o.GetToIds() {
-    if err = c.Rcpt(o.GetToIdAddress(k)); err != nil {
-      return GomailErrSyntaxRecipients
-    }
-  }
-
-  // Data
-  w, err := c.Data()
-  if err != nil {
-    return GomailErrMessageData
-  }
-
-  _, err = w.Write([]byte(messageToSend))
-  if err != nil {
-    return GomailErrSendMessage
-  }
-
-  err = w.Close()
-  if err != nil {
-    return GomailErrWriteClientClose
-  }
-  return nil
 }

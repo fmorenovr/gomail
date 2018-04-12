@@ -34,6 +34,11 @@ func Example_sendingMessage() {
 
   // add another recipient
   gomailObject.AddToIds("Person added", "personadded@gomail.com")
+  
+  // repeat email with differents names
+  gomailObject.AddToIds("Person added copy", "personadded@gomail.com")
+  gomailObject.AddToIds("Person added no, im the copy", "personadded@gomail.com")
+  gomailObject.AddToIds("Person added no, im the one", "personadded@gomail.com")
 
   // add other recipients
   gomailObject.AddListToIds([]gomail.Recipients{{"Person added in list 1", "personaddedlist_1@gomail.com"}, {"Person added in list 2", "personaddedlist_2@gomail.com"}})

@@ -14,7 +14,7 @@ See more info [here](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol
 
       go get github.com/jenazads/gomail/
 
-* Then, you should use for differents Web Frameworks in Go.
+* Then, you should use for differents implements in Go.
         
     * First, Create a gomail object:
     

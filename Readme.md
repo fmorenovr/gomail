@@ -43,7 +43,7 @@ See more info [here](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol
     
 * Finally, send a message:
         
-       err := smtpServer.SendMessage(authUser, gomailObject)
+       err := gomailObject.SendMessage()
        fmt.Println("Error: ", err)
 
 

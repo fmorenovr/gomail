@@ -10,7 +10,7 @@ import (
   "html/template";
 )
 
-type Gomail struct {
+type GoMail struct {
   from        mail.Address
   to          []mail.Address
   subject     string
@@ -22,8 +22,8 @@ type Gomail struct {
 }
 
 // Create a New Gomail instance
-func NewGomail()(*Gomail, error){
-  return &Gomail{
+func NewGoMail()(*GoMail, error){
+  return &GoMail{
            mail.Address{"", ""},
            nil,
            "",
@@ -35,7 +35,7 @@ func NewGomail()(*Gomail, error){
 }
 
 // menu to ser
-func (o *Gomail) Set(key, value string)(){
+func (o *GoMail) Set(key, value string)(){
   switch key{
     case "From":
       o.SetFromAddress(value)
@@ -61,7 +61,7 @@ func (o *Gomail) Set(key, value string)(){
 }
 
 // find by name
-func (o *Gomail) FindByEmail(email string)(aux int){
+func (o *GoMail) FindByEmail(email string)(aux int){
   aux = -1
   for k, v:= range o.GetToIds(){
     if v.Address == email {
@@ -74,7 +74,7 @@ func (o *Gomail) FindByEmail(email string)(aux int){
 }
 
 // find by email
-func (o *Gomail) FindByName(name string)(aux int){
+func (o *GoMail) FindByName(name string)(aux int){
   aux = -1
   for k, v:= range o.GetToIds(){
     if v.Name == name {
@@ -86,7 +86,7 @@ func (o *Gomail) FindByName(name string)(aux int){
 }
 
 // menu to change
-func (o *Gomail) ChangeToId(by, original, v string)(){
+func (o *GoMail) ChangeToId(by, original, v string)(){
   switch by {
     case "Name":
       o.changeToIdName(original, v)
@@ -100,7 +100,7 @@ func (o *Gomail) ChangeToId(by, original, v string)(){
 }
 
 // set specific recipient name
-func (o *Gomail) changeToIdName(original, v string) (){
+func (o *GoMail) changeToIdName(original, v string) (){
   aux := o.FindByName(original)
   if aux == -1 {
     return
@@ -110,7 +110,7 @@ func (o *Gomail) changeToIdName(original, v string) (){
 }
 
 // set specific recipient address
-func (o *Gomail) changeToIdEmail(original, v string)(){
+func (o *GoMail) changeToIdEmail(original, v string)(){
   aux := o.FindByEmail(strings.ToLower(original))
   if aux == -1 {
     return
@@ -120,7 +120,7 @@ func (o *Gomail) changeToIdEmail(original, v string)(){
 }
 
 // menu to delete
-func (o *Gomail) DeleteToId(by, original string)(){
+func (o *GoMail) DeleteToId(by, original string)(){
   switch by {
     case "Name":
       o.deleteToIdByName(original)
@@ -134,7 +134,7 @@ func (o *Gomail) DeleteToId(by, original string)(){
 }
 
 // delete specific recipient name
-func (o *Gomail) deleteToIdByName(original string)(){
+func (o *GoMail) deleteToIdByName(original string)(){
   i := o.FindByName(original)
   if i == -1 {
     return
@@ -144,7 +144,7 @@ func (o *Gomail) deleteToIdByName(original string)(){
 }
 
 // delete specific recipient address
-func (o *Gomail) deleteToIdByEmail(original string)(){
+func (o *GoMail) deleteToIdByEmail(original string)(){
   i := o.FindByEmail(strings.ToLower(original))
   if i == -1 {
     return
@@ -154,17 +154,17 @@ func (o *Gomail) deleteToIdByEmail(original string)(){
 }
 
 // get specific recipient address
-func (o *Gomail) GetToIdAddress(toId mail.Address)(string){
+func (o *GoMail) GetToIdAddress(toId mail.Address)(string){
   return toId.Address
 }
 
 // get specific recipient name
-func (o *Gomail) GetToIdName(toId mail.Address)(string){
+func (o *GoMail) GetToIdName(toId mail.Address)(string){
   return toId.Name
 }
 
 // set unique recipient name
-func (o *Gomail) SetToIdsName(v string)(){
+func (o *GoMail) SetToIdsName(v string)(){
   if o.to == nil || len(o.to) > 1{
     var aux []mail.Address
     aux = append(aux, mail.Address{v, ""})
@@ -177,7 +177,7 @@ func (o *Gomail) SetToIdsName(v string)(){
 }
 
 // set unique recipient mail
-func (o *Gomail) SetToIdsAddress(v string)(){
+func (o *GoMail) SetToIdsAddress(v string)(){
   if o.to == nil || len(o.to) > 1{
     var aux []mail.Address
     aux = append(aux, mail.Address{"", v})
@@ -190,20 +190,20 @@ func (o *Gomail) SetToIdsAddress(v string)(){
 }
 
 // set ids of recipients
-func (o *Gomail) SetToIds(name, email string)(){
+func (o *GoMail) SetToIds(name, email string)(){
   var aux []mail.Address
   aux = append(aux, mail.Address{name, strings.ToLower(email)})
   o.to = aux
 }
 
 // add new recipient
-func (o *Gomail) AddToIds(name, email string)(){
+func (o *GoMail) AddToIds(name, email string)(){
   toId := mail.Address{name, strings.ToLower(email)}
   o.to = append(o.to, toId)
 }
 
 // set list of ids of recipients
-func (o *Gomail) SetListToIds (toIdString []Recipients)(){
+func (o *GoMail) SetListToIds (toIdString []Recipients)(){
   var toIds []mail.Address
   for _, v:= range toIdString{
     toIds = append(toIds, mail.Address{v.Name, strings.ToLower(v.Email)})
@@ -212,19 +212,19 @@ func (o *Gomail) SetListToIds (toIdString []Recipients)(){
 }
 
 // add list of ids of recipients
-func (o *Gomail) AddListToIds (toIdString []Recipients)(){
+func (o *GoMail) AddListToIds (toIdString []Recipients)(){
   for _, v:= range toIdString{
     o.to = append(o.to, mail.Address{v.Name, strings.ToLower(v.Email)})
   }
 }
 
 // get ids of recipients
-func (o *Gomail) GetToIds ()([]mail.Address){
+func (o *GoMail) GetToIds ()([]mail.Address){
   return o.to
 }
 
 // get ids of recipients
-func (o *Gomail) GetToIdsToString ()([]string){
+func (o *GoMail) GetToIdsToString ()([]string){
   var mails []string
   for _, v := range o.to {
     mails = append(mails, v.String())
@@ -233,57 +233,57 @@ func (o *Gomail) GetToIdsToString ()([]string){
 }
 
 // set from address
-func (o *Gomail) SetFromAddress(v string)(){
+func (o *GoMail) SetFromAddress(v string)(){
   o.from.Address = v
 }
 
 // get from address
-func (o *Gomail) GetFromAddress()(string){
+func (o *GoMail) GetFromAddress()(string){
   return o.from.Address
 }
 
 // set from name
-func (o *Gomail) SetFromName(v string)(){
+func (o *GoMail) SetFromName(v string)(){
   o.from.Name = v
 }
 
 // get from name
-func (o *Gomail) GetFromName()(string){
+func (o *GoMail) GetFromName()(string){
   return o.from.Name
 }
 
 // set from
-func (o *Gomail) SetFrom(name, email string)(){
+func (o *GoMail) SetFrom(name, email string)(){
   v := mail.Address{name, email}
   o.from = v
 }
 
 // get from
-func (o *Gomail) GetFrom()(string){
+func (o *GoMail) GetFrom()(string){
   return o.from.String()
 }
 
 // set subject message
-func (o *Gomail) SetSubject(v string)(){
+func (o *GoMail) SetSubject(v string)(){
   o.subject = v
 }
 
 // get subject message
-func (o *Gomail) GetSubject()(string){
+func (o *GoMail) GetSubject()(string){
   return o.subject
 }
 
 // set body message
-func (o *Gomail) SetBodyMessage(v string)(){
+func (o *GoMail) SetBodyMessage(v string)(){
   o.bodyMessage = v
 }
 
 // set boddy Message as Template
-func (o *Gomail) SetBodyMessageAsTemplate(templateToResPath string, infoMail interface{}){
+func (o *GoMail) SetBodyMessageAsTemplate(templateToResPath string, infoMail interface{}){
   t, err := template.ParseFiles(templateToResPath)
   if err != nil {
-    fmt.Println(GomailErrNotFoundTemplate)
-    panic(GomailErrNotFoundTemplate)
+    fmt.Println(GoMailErrNotFoundTemplate)
+    panic(GoMailErrNotFoundTemplate)
     return
   }
   
@@ -291,60 +291,60 @@ func (o *Gomail) SetBodyMessageAsTemplate(templateToResPath string, infoMail int
   buffer := new(bytes.Buffer)
   err = t.Execute(buffer, infoMail)
   if err != nil {
-    fmt.Println(GomailErrConvertToByte)
-    panic(GomailErrConvertToByte)
+    fmt.Println(GoMailErrConvertToByte)
+    panic(GoMailErrConvertToByte)
     return
   }
   o.bodyMessage = buffer.String()
 }
 
 // get body message
-func (o *Gomail) GetBodyMessage()(string){
+func (o *GoMail) GetBodyMessage()(string){
   return o.bodyMessage
 }
 
 // set content type
-func (o *Gomail) SetContentType(v string)(){
+func (o *GoMail) SetContentType(v string)(){
   o.contentType = v
 }
 
 // get content type
-func (o *Gomail) GetContentType()(string){
+func (o *GoMail) GetContentType()(string){
   return o.contentType
 }
 
 // set username
-func (o *Gomail) SetUsername(v string)(){
+func (o *GoMail) SetUsername(v string)(){
   o.username = v
 }
 
 // get username
-func (o *Gomail) GetUsername()(string){
+func (o *GoMail) GetUsername()(string){
   return o.username
 }
 
 // set passwd
-func (o *Gomail) SetPassword(v string)(){
+func (o *GoMail) SetPassword(v string)(){
   o.password = v
 }
 
 // get passwd
-func (o *Gomail) GetPassword()(string){
+func (o *GoMail) GetPassword()(string){
   return o.password
 }
 
 // set servername
-func (o *Gomail) SetServerName(v string)(){
+func (o *GoMail) SetServerName(v string)(){
   o.servername.NewSMTPServerName(v)
 }
 
 // get servername
-func (o *Gomail) GetServerName()(string){
+func (o *GoMail) GetServerName()(string){
   return o.servername.GetServerName()
 }
 
 // remove element if is duplicate (email or name).
-func (o *Gomail) VerifyDuplicityByEmail()(){
+func (o *GoMail) VerifyDuplicityByEmail()(){
   result := []mail.Address{}
   for i := 0; i < len(o.to); i++ {
     // Scan slice for a previous element of the same value.
@@ -364,7 +364,7 @@ func (o *Gomail) VerifyDuplicityByEmail()(){
 }
 
 // remove element if is duplicate (email or name).
-func (o *Gomail) VerifyDuplicityByName()(){
+func (o *GoMail) VerifyDuplicityByName()(){
   result := []mail.Address{}
   for i := 0; i < len(o.to); i++ {
     // Scan slice for a previous element of the same value.
@@ -384,21 +384,21 @@ func (o *Gomail) VerifyDuplicityByName()(){
 }
 
 // verify all mails
-func (o *Gomail) VerifyEmails()(error){
+func (o *GoMail) VerifyEmails()(error){
   isFromCorrect := VerifyFormatEmail(o.GetFromAddress())
   if !isFromCorrect {
-    return GomailErrBadFormatEmailFrom
+    return GoMailErrBadFormatEmailFrom
   }
   for _, v := range o.GetToIds(){
     if !VerifyFormatEmail(v.Address) {
-      return GomailErrBadFormatEmailToId
+      return GoMailErrBadFormatEmailToId
     }
   }
   return nil
 }
 
 // build the message
-func (o *Gomail) PrepareMessage() string {
+func (o *GoMail) PrepareMessage() string {
   o.VerifyDuplicityByEmail()
    // Setup message
   message := ""
@@ -416,7 +416,7 @@ func (o *Gomail) PrepareMessage() string {
 }
 
 // Send Message
-func (o *Gomail) SendMessage()(error){
+func (o *GoMail) SendMessage()(error){
   err := o.VerifyEmails()
 	u := NewUserCredentials(o.GetUsername(), o.GetPassword())
   if err != nil{
@@ -427,53 +427,53 @@ func (o *Gomail) SendMessage()(error){
   host := o.servername.GetServerHost()
 
   //build an auth
-  auth := NewGomailAuth(u, host)
+  auth := NewGoMailAuth(u, host)
 
   // TLS config
   tlsconfig := o.servername.SMTPServerTLS()
   conn, err := tls.Dial("tcp", servername, tlsconfig)
   if err != nil {
-    return GomailErrBadHostPortServer
+    return GoMailErrBadHostPortServer
   }
 
   // create new client
   c, err := smtp.NewClient(conn, host)
   if err != nil {
-    return GomailErrSMTPClient
+    return GoMailErrSMTPClient
   }
 
   defer c.Quit()
 
   // step 1: Use Auth
   if err = c.Auth(auth); err != nil {
-    return GomailErrBadCredentials
+    return GoMailErrBadCredentials
   }
 
   // step 2: add all from and to
   if err = c.Mail(o.GetFromAddress()); err != nil {
-    return GomailErrSyntaxSender
+    return GoMailErrSyntaxSender
   }
 
   for _, k := range o.GetToIds() {
     if err = c.Rcpt(o.GetToIdAddress(k)); err != nil {
-      return GomailErrSyntaxRecipients
+      return GoMailErrSyntaxRecipients
     }
   }
 
   // Data
   w, err := c.Data()
   if err != nil {
-    return GomailErrMessageData
+    return GoMailErrMessageData
   }
 
   _, err = w.Write([]byte(messageToSend))
   if err != nil {
-    return GomailErrSendMessage
+    return GoMailErrSendMessage
   }
 
   err = w.Close()
   if err != nil {
-    return GomailErrWriteClientClose
+    return GoMailErrWriteClientClose
   }
   return nil
 }

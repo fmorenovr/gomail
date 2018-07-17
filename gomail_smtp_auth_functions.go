@@ -17,7 +17,7 @@ func (a unEncryptedAuth) Start(server *smtp.ServerInfo) (string, []byte, error) 
 }
 
 // Instance an auth with a specific host
-func NewGomailAuth(a *UserCredentials, host string) (unEncryptedAuth){
+func NewGoMailAuth(a *UserCredentials, host string) (unEncryptedAuth){
   return unEncryptedAuth {
      smtp.PlainAuth("",a.GetUsername(), a.GetPasswd(), host),
    }

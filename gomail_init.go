@@ -1,8 +1,10 @@
 package gomail
 
-import "fmt"
+import(
+//  "fmt";
+)
 
 func init(){
-  fmt.Println("====> Init GoMail, a SMTP Library :D")
-  fmt.Println("====> by Jenazads.\n")
+  //fmt.Println("====> Init GoMail, a SMTP Library :D")
+  //fmt.Println("====> by Jenazads.\n")
 }

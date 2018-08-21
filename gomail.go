@@ -10,6 +10,7 @@ import (
   "html/template";
 )
 
+// GoMail object
 type GoMail struct {
   from        mail.Address
   to          []mail.Address

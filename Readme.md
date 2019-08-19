@@ -1,7 +1,7 @@
 # golang + Mail = GoMail (Gomail)
 
 goMail (Golang for SMTP) is a Golang implementation for Simple Mail Transfer Protocol service.
-You can see an extended doc in [godocs](https://godoc.org/github.com/Jenazads/goMail).
+You can see an extended doc in [godocs](https://godoc.org/github.com/fmorenovr/goMail).
 
 ## SMTP
 
@@ -12,7 +12,7 @@ See more info [here](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol
 
 * First, You should download my library:
 
-      go get github.com/jenazads/gomail/
+      go get github.com/fmorenovr/gomail/
 
 * Then, you should use for differents implements in Go.
         
